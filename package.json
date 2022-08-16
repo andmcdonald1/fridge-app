@@ -9,14 +9,16 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "eas-cli": "^0.60.0",
     "expo": "~46.0.7",
     "expo-status-bar": "~1.4.0",
     "firebase": "^9.9.2",
     "module-resolver": "^1.0.0",
     "react": "18.0.0",
     "react-native": "0.69.4",
+    "react-native-maps": "0.31.1",
     "react-native-paper": "^4.12.4",
-    "react-native-maps": "0.31.1"
+    "expo-updates": "~0.14.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
