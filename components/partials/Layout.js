@@ -2,8 +2,12 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Title } from "react-native-paper";
 
-const Layout = ({}) => {
-  return <View></View>;
+const Layout = () => {
+  return (
+    <View style={styles.container}>
+      <Title>Test Screen</Title>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -14,3 +18,5 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
 });
+
+export default Layout;
