@@ -1,22 +1,18 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, useWindowDimensions } from "react-native";
 import { Title } from "react-native-paper";
+import Bottom from "./Bottom";
 
 const Layout = () => {
+  const { width, height } = useWindowDimensions();
+  const styles = StyleSheet.create({
+    container: { width: width, flex: 1 },
+  });
   return (
     <View style={styles.container}>
-      <Title>Test Screen</Title>
+      <Bottom />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-  },
-});
 
 export default Layout;

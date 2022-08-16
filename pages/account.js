@@ -2,10 +2,10 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Title } from "react-native-paper";
 
-const HomeScreen = ({ navigation, route }) => {
+const AccountScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
-      <Title>Home Screen</Title>
+      <Title>Account Screen</Title>
     </View>
   );
 };
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
 });
-export default HomeScreen;
+export default AccountScreen;
