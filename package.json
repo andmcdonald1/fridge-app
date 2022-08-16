@@ -11,8 +11,12 @@
   "dependencies": {
     "expo": "~46.0.7",
     "expo-status-bar": "~1.4.0",
+    "firebase": "^9.9.2",
+    "module-resolver": "^1.0.0",
     "react": "18.0.0",
-    "react-native": "0.69.4"
+    "react-native": "0.69.4",
+    "react-native-paper": "^4.12.4",
+    "react-native-maps": "0.31.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
