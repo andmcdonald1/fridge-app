@@ -2,7 +2,7 @@ import { getAuth, signInAnonymously, signOut } from "firebase/auth";
 
 export const register = async ({ email, password }) => {};
 
-export const login = async () => {
+export const login = async ({ email, password }) => {
   const auth = getAuth();
   signInAnonymously(auth)
     .then((res) => {
@@ -12,7 +12,7 @@ export const login = async () => {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log("[auth API] authentication error: ", errorMessage, errorDoe);
+      console.log("[auth API] authentication error: ", errorMessage, errorCode);
     });
 };
 

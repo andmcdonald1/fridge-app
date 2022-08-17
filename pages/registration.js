@@ -1,12 +1,12 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, KeyboardAvoidingView } from "react-native";
 import { Title } from "react-native-paper";
 
 const RegistrationScreen = ({ navigation, route }) => {
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Title>Registration Screen</Title>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

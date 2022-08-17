@@ -3,7 +3,7 @@ import {
   AUTH_CLEAR_ITEM,
   AUTH_SHOW_LOADER,
   AUTH_HIDE_LOADER,
-} from "@/configs/action";
+} from "@/configs/actions";
 
 const INIT_STATE = {
   loader: false,
