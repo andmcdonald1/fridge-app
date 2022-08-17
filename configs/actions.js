@@ -1,0 +1,5 @@
+// Auth
+export const AUTH_SET_ITEM = "AUTH_SET_ITEM";
+export const AUTH_CLEAR_ITEM = "AUTH_CLEAR_ITEM";
+export const AUTH_SHOW_LOADER = "AUTH_SHOW_LOADER";
+export const AUTH_HIDE_LOADER = "AUTH_HIDE_LOADER";
