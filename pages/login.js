@@ -4,6 +4,7 @@ import { Title, TextInput, Button, HelperText } from "react-native-paper";
 import { useSelector, useDispatch } from "react-redux";
 import { validateEmail } from "@/utils/strings";
 import { login } from "@/redux/actions/auth";
+import { MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH } from "@/configs/constants";
 
 const LoginScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -20,7 +21,8 @@ const LoginScreen = ({ navigation, route }) => {
 
   const onSubmit = async () => {
     const hasEmailError = !data.email || !validateEmail(data.email);
-    const hasPasswordError = !data.password;
+    const hasPasswordError =
+      !data.password || data.password.length < MIN_PASSWORD_LENGTH;
     setEmailError(hasEmailError);
     setPasswordError(hasPasswordError);
     if (hasEmailError || hasPasswordError) return;
@@ -54,6 +56,7 @@ const LoginScreen = ({ navigation, route }) => {
             label="Password"
             placeholder="Please enter an password"
             secureTextEntry
+            maxLength={MAX_PASSWORD_LENGTH}
           />
           {passwordError && (
             <HelperText type="error">A password is required</HelperText>
