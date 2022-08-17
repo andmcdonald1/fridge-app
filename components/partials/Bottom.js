@@ -1,15 +1,25 @@
-import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet } from "react-native";
 import { HomeScreen, SearchScreen, AccountScreen } from "@/pages";
-import { BottomNavigation, Title } from "react-native-paper";
+import { BottomNavigation } from "react-native-paper";
+import { auth } from "@/services/firebase";
 
-const Bottom = () => {
+const Bottom = ({ navigation, route }) => {
   const [index, setIndex] = useState(0);
+
   const [routes] = useState([
     { key: "home", title: "Home", icon: "home" },
     { key: "search", title: "Search", icon: "magnify" },
     { key: "account", title: "Account", icon: "account" },
   ]);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.replace("login");
+      }
+    });
+  }, []);
 
   const renderScene = BottomNavigation.SceneMap({
     home: HomeScreen,

@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, KeyboardAvoidingView, View } from "react-native";
 import { Title, TextInput, Button, HelperText } from "react-native-paper";
-import { useSelector, useDispatch } from "react-redux";
+import { auth } from "@/services/firebase";
 import { validateEmail } from "@/utils/strings";
-import { login } from "@/redux/actions/auth";
+import { login } from "@/api/auth";
 import { MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH } from "@/configs/constants";
 
 const LoginScreen = ({ navigation, route }) => {
-  const dispatch = useDispatch();
   const [data, setData] = useState({});
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const { me, loader } = useSelector((auth) => auth);
   useEffect(() => {
-    if (me) {
-      navigation.replace("bottom");
-    }
-  }, [me, loader]);
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.replace("bottom");
+      }
+    });
+  }, []);
 
   const onSubmit = async () => {
     const hasEmailError = !data.email || !validateEmail(data.email);
@@ -27,8 +28,11 @@ const LoginScreen = ({ navigation, route }) => {
     setPasswordError(hasPasswordError);
     if (hasEmailError || hasPasswordError) return;
 
+    setLoading(true);
+
     // Login
-    dispatch(login(data));
+    await login(data);
+    setLoading(false);
   };
 
   const onInput = (key, val) => {
@@ -68,8 +72,8 @@ const LoginScreen = ({ navigation, route }) => {
         </View>
         <Button
           onPress={onSubmit}
-          loading={loader}
-          disabled={loader}
+          loading={loading}
+          disabled={loading}
           mode="contained"
         >
           Login
