@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Bottom from "./Bottom";
 import { LoginScreen, RegistrationScreen } from "@/pages";
+import Toast from "react-native-toastify";
 
 const Layout = () => {
   const styles = StyleSheet.create({

@@ -36,6 +36,10 @@ const LoginScreen = ({ navigation, route }) => {
     setData(_data);
   };
 
+  const onNavigate = () => {
+    navigation.navigate("register");
+  };
+
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View>
@@ -69,6 +73,9 @@ const LoginScreen = ({ navigation, route }) => {
           mode="contained"
         >
           Login
+        </Button>
+        <Button onPress={onNavigate} uppercase={false}>
+          Already have an account? Login
         </Button>
       </View>
     </KeyboardAvoidingView>
