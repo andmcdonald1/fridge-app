@@ -1,5 +1,4 @@
 export const validateEmail = (email) => {
-  return true;
   return (
     String(email)
       .toLowerCase()
