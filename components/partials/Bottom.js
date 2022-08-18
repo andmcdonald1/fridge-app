@@ -3,23 +3,24 @@ import { StyleSheet } from "react-native";
 import { HomeScreen, SearchScreen, AccountScreen } from "@/pages";
 import { BottomNavigation } from "react-native-paper";
 import { auth } from "@/services/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Bottom = ({ navigation, route }) => {
   const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigation.replace("login");
+      }
+    });
+  }, []);
 
   const [routes] = useState([
     { key: "home", title: "Home", icon: "home" },
     { key: "search", title: "Search", icon: "magnify" },
     { key: "account", title: "Account", icon: "account" },
   ]);
-
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigation.replace("login");
-      }
-    });
-  }, []);
 
   const renderScene = BottomNavigation.SceneMap({
     home: HomeScreen,

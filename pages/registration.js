@@ -4,6 +4,7 @@ import { Title, TextInput, Button, HelperText } from "react-native-paper";
 import { auth } from "@/services/firebase";
 import { validateEmail } from "@/utils/strings";
 import { register } from "@/api/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH } from "@/configs/constants";
 
 const RegistrationScreen = ({ navigation, route }) => {
@@ -14,7 +15,7 @@ const RegistrationScreen = ({ navigation, route }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         navigation.replace("bottom");
       }
@@ -23,7 +24,9 @@ const RegistrationScreen = ({ navigation, route }) => {
 
   const onSubmit = async () => {
     const { email, password } = data;
-    const hasEmailError = !email || !validateEmail(email);
+    const isValid = validateEmail(email);
+
+    const hasEmailError = !email || !isValid;
     const hasPasswordError = !password || password.length < MIN_PASSWORD_LENGTH;
     setEmailError(hasEmailError);
     setPasswordError(hasPasswordError);
@@ -32,7 +35,7 @@ const RegistrationScreen = ({ navigation, route }) => {
     setLoading(true);
 
     // Login
-    await register({ email, password });
+    await register(email, password);
     setLoading(false);
   };
 
@@ -53,7 +56,7 @@ const RegistrationScreen = ({ navigation, route }) => {
         </View>
         <View style={styles.section}>
           <TextInput
-            onChangeText={(val) => onInput("email", val)}
+            onChangeText={(val) => onInput("email", val.toLowerCase().trim())}
             label="Email"
             placeholder="Please enter an email"
             mode="contained"
@@ -65,7 +68,7 @@ const RegistrationScreen = ({ navigation, route }) => {
 
         <View style={styles.section}>
           <TextInput
-            onChangeText={(val) => onInput("password", val)}
+            onChangeText={(val) => onInput("password", val.toLowerCase())}
             label="Password"
             placeholder="Please enter an password"
             secureTextEntry={!showPassword}
@@ -89,7 +92,7 @@ const RegistrationScreen = ({ navigation, route }) => {
           disabled={loading}
           mode="contained"
         >
-          Login
+          Register
         </Button>
         <Button onPress={onNavigate} uppercase={false}>
           Already have an account? Login

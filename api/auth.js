@@ -1,42 +1,41 @@
 import { auth } from "@/services/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 
-export const register = async ({ email, password }) => {
-  auth
-    .createUserWithEmailAndPassword(email, password)
+export const register = async (email, password) => {
+  let user;
+  createUserWithEmailAndPassword(auth, email, password)
     .then((userCredentials) => {
-      const user = userCredentials.user;
+      user = userCredentials.user;
       console.log(user);
-      return user;
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log("[auth API] registration error: ", errorMessage, errorCode);
       alert(errorMessage);
-      return null;
     });
 };
 
-export const login = async ({ email, password }) => {
-  auth
-    .signInWithEmailAndPassword(email, password)
+export const login = async (email, password) => {
+  signInWithEmailAndPassword(auth, email, password)
     .then((userCredentials) => {
       const user = userCredentials.user;
       console.log(user);
-      return user;
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log("[auth API] login error: ", errorMessage, errorCode);
       alert(errorMessage);
-      return null;
     });
 };
 
 export const logout = async () => {
-  auth
-    .signOut()
+  signOut(auth)
     .then(() => {
       return null;
     })

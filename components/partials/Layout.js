@@ -11,7 +11,7 @@ const Layout = () => {
   return (
     <View style={{ flex: 1 }}>
       <NavigationContainer style={styles.container}>
-        <Stack.Navigator initialRouteName="login">
+        <Stack.Navigator initialRouteName="bottom">
           <Stack.Screen
             options={{ headerShown: false }}
             name="login"
@@ -22,7 +22,11 @@ const Layout = () => {
             name="register"
             component={RegistrationScreen}
           />
-          <Stack.Screen name="bottom" component={Bottom} />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="bottom"
+            component={Bottom}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

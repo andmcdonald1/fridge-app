@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { Title } from "react-native-paper";
+import { Title, Button } from "react-native-paper";
+import { logout } from "@/api/auth";
+import { auth } from "@/services/firebase";
 
 const HomeScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <Title>Home Screen</Title>
+      <Button onPress={logout}>Logout</Button>
     </View>
   );
 };

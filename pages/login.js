@@ -4,6 +4,7 @@ import { Title, TextInput, Button, HelperText } from "react-native-paper";
 import { auth } from "@/services/firebase";
 import { validateEmail } from "@/utils/strings";
 import { login } from "@/api/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH } from "@/configs/constants";
 
 const LoginScreen = ({ navigation, route }) => {
@@ -14,7 +15,7 @@ const LoginScreen = ({ navigation, route }) => {
   const [data, setData] = useState({});
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         navigation.replace("bottom");
       }
@@ -23,7 +24,9 @@ const LoginScreen = ({ navigation, route }) => {
 
   const onSubmit = async () => {
     const { email, password } = data;
-    const hasEmailError = !email || !validateEmail(email);
+    console.log(email, password);
+    const isValid = validateEmail(email);
+    const hasEmailError = !email || !isValid;
     const hasPasswordError = !password || password.length < MIN_PASSWORD_LENGTH;
     setEmailError(hasEmailError);
     setPasswordError(hasPasswordError);
@@ -32,7 +35,7 @@ const LoginScreen = ({ navigation, route }) => {
     setLoading(true);
 
     // Login
-    await login({ email, password });
+    await login(email, password);
     setLoading(false);
   };
 
@@ -53,7 +56,7 @@ const LoginScreen = ({ navigation, route }) => {
         </View>
         <View style={styles.section}>
           <TextInput
-            onChangeText={(val) => onInput("email", val)}
+            onChangeText={(val) => onInput("email", val.toLowerCase().trim())}
             label="Email"
             placeholder="Please enter an email"
             mode="contained"
