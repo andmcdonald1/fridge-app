@@ -7,10 +7,11 @@ import { login } from "@/api/auth";
 import { MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH } from "@/configs/constants";
 
 const LoginScreen = ({ navigation, route }) => {
-  const [data, setData] = useState({});
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [data, setData] = useState({});
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -21,9 +22,9 @@ const LoginScreen = ({ navigation, route }) => {
   }, []);
 
   const onSubmit = async () => {
-    const hasEmailError = !data.email || !validateEmail(data.email);
-    const hasPasswordError =
-      !data.password || data.password.length < MIN_PASSWORD_LENGTH;
+    const { email, password } = data;
+    const hasEmailError = !email || !validateEmail(email);
+    const hasPasswordError = !password || password.length < MIN_PASSWORD_LENGTH;
     setEmailError(hasEmailError);
     setPasswordError(hasPasswordError);
     if (hasEmailError || hasPasswordError) return;
@@ -31,7 +32,7 @@ const LoginScreen = ({ navigation, route }) => {
     setLoading(true);
 
     // Login
-    await login(data);
+    await login({ email, password });
     setLoading(false);
   };
 
@@ -45,32 +46,44 @@ const LoginScreen = ({ navigation, route }) => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <View>
-        <Title>Login</Title>
-        <View>
+    <KeyboardAvoidingView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <View style={styles.titleSection}>
+          <Title>Login</Title>
+        </View>
+        <View style={styles.section}>
           <TextInput
-            onChange={(val) => onInput("email", val)}
+            onChangeText={(val) => onInput("email", val)}
             label="Email"
             placeholder="Please enter an email"
+            mode="contained"
           />
           {emailError && (
             <HelperText type="error">An email is required</HelperText>
           )}
         </View>
-        <View>
+
+        <View style={styles.section}>
           <TextInput
-            onChange={(val) => onInput("password", val)}
+            onChangeText={(val) => onInput("password", val)}
             label="Password"
             placeholder="Please enter an password"
-            secureTextEntry
+            secureTextEntry={!showPassword}
             maxLength={MAX_PASSWORD_LENGTH}
+            mode="contained"
+            right={
+              <TextInput.Icon
+                onPress={() => setShowPassword(!showPassword)}
+                name={showPassword ? "eye" : "eye-off"}
+              />
+            }
           />
           {passwordError && (
-            <HelperText type="error">A password is required</HelperText>
+            <HelperText type="error">{`Password must be between ${MIN_PASSWORD_LENGTH} & ${MAX_PASSWORD_LENGTH} characters`}</HelperText>
           )}
         </View>
         <Button
+          style={styles.button}
           onPress={onSubmit}
           loading={loading}
           disabled={loading}
@@ -79,7 +92,7 @@ const LoginScreen = ({ navigation, route }) => {
           Login
         </Button>
         <Button onPress={onNavigate} uppercase={false}>
-          Already have an account? Login
+          Don't have an account? Register
         </Button>
       </View>
     </KeyboardAvoidingView>
@@ -92,6 +105,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
+    padding: 20,
+  },
+  section: {
+    width: "100%",
+    marginVertical: 10,
+  },
+  button: { width: "100%", borderRadius: 4, elevation: 3 },
+  titleSection: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    width: "100%",
   },
 });
 export default LoginScreen;

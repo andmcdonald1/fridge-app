@@ -18,9 +18,7 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/3d262697-2722-49e8-88ca-8c04835a90d0"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "buildNumber": "1",
@@ -29,8 +27,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF",
-        "versionCode": 1
+        "backgroundColor": "#FFFFFF"
       },
       "package": "com.andmcdonald.fridgeapp"
     },

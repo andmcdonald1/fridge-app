@@ -12,6 +12,7 @@ export const register = async ({ email, password }) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log("[auth API] registration error: ", errorMessage, errorCode);
+      alert(errorMessage);
       return null;
     });
 };
@@ -28,6 +29,7 @@ export const login = async ({ email, password }) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log("[auth API] login error: ", errorMessage, errorCode);
+      alert(errorMessage);
       return null;
     });
 };

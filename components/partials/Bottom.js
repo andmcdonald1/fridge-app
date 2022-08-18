@@ -37,6 +37,4 @@ const Bottom = ({ navigation, route }) => {
   );
 };
 
-const styles = StyleSheet.create({});
-
 export default Bottom;
