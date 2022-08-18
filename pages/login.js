@@ -22,9 +22,10 @@ const LoginScreen = ({ navigation, route }) => {
     });
   }, []);
 
+  useEffect(() => {}, [loading]);
+
   const onSubmit = async () => {
     const { email, password } = data;
-    console.log(email, password);
     const isValid = validateEmail(email);
     const hasEmailError = !email || !isValid;
     const hasPasswordError = !password || password.length < MIN_PASSWORD_LENGTH;
